@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 360" role="img" aria-label="Illustration of volunteers joining together as a connected community with a heart">
+  <!-- soft background accents -->
+  <circle cx="400" cy="70" r="90" fill="#0284c7" opacity="0.10"/>
+  <circle cx="60" cy="300" r="70" fill="#0d9488" opacity="0.10"/>
+  <!-- grounding shadow -->
+  <ellipse cx="230" cy="312" rx="150" ry="16" fill="#1e293b" opacity="0.06"/>
+
+  <!-- three overlapping community circles with volunteer glyphs -->
+  <g>
+    <circle cx="160" cy="212" r="80" fill="#1e3a8a" opacity="0.85"/>
+    <g transform="translate(160,212)" fill="#ffffff">
+      <circle cx="0" cy="-14" r="16"/>
+      <path d="M-26 32 C-26 8 -13 2 0 2 C13 2 26 8 26 32 Z"/>
+    </g>
+  </g>
+  <g>
+    <circle cx="300" cy="212" r="80" fill="#0284c7" opacity="0.85"/>
+    <g transform="translate(300,212)" fill="#ffffff">
+      <circle cx="0" cy="-14" r="16"/>
+      <path d="M-26 32 C-26 8 -13 2 0 2 C13 2 26 8 26 32 Z"/>
+    </g>
+  </g>
+  <g>
+    <circle cx="230" cy="150" r="80" fill="#0d9488" opacity="0.85"/>
+    <g transform="translate(230,150)" fill="#ffffff">
+      <circle cx="0" cy="-14" r="16"/>
+      <path d="M-26 32 C-26 8 -13 2 0 2 C13 2 26 8 26 32 Z"/>
+    </g>
+  </g>
+
+  <!-- heart badge tying the community together -->
+  <circle cx="230" cy="66" r="30" fill="#ffffff"/>
+  <circle cx="230" cy="66" r="30" fill="none" stroke="#e5e7eb" stroke-width="2"/>
+  <path d="M230 82 C214 71 211 60 219 56 C224 53 228 57 230 61 C232 57 236 53 241 56 C249 60 246 71 230 82 Z" fill="#ef4444"/>
+</svg>

@@ -1,27 +1,59 @@
-# BYU-Pathway Worldwide Online
-## WDD 330 - Web Frontend Development II
+# Community Service Hub (CSE 340)
 
-### ⛺ SleepOutside Starter Code
+A server-rendered web application built for the **CSE 340 – Web Backend** course. The site connects volunteers with local organizations, service projects, and causes, using **Node.js**, **Express**, and **EJS** templates.
 
- - This repository is the start of the SleepOutside web application project for WDD 330. The repository contains branches which are checkpoints for the team and individual assignments throughout the course.
+## Features
 
- - https://byui-cse.github.io/wdd330-ww-course/week01/team.html
+- Node.js and Express server with EJS as the view engine
+- Pages for **Home**, **Organizations**, **Service Projects**, and **Categories**
+- Reusable `header` and `footer` EJS partials shared across every page
+- Static CSS and images served from the `public/` folder
+- Responsive, accessible, professional styling
 
-### Prerequisites
+## Project structure
 
-- You must have Node installed to run the following commands.
-[WDD 330 Setup Environment](https://byui-cse.github.io/wdd330-ww-course/intro/) 
+```
+cse340/
+├── public/
+│   ├── css/styles.css        # Site styles
+│   └── images/               # SVG logos and hero illustration
+├── views/
+│   ├── partials/
+│   │   ├── header.ejs        # Shared head + navigation
+│   │   └── footer.ejs        # Shared footer + copyright
+│   ├── index.ejs             # Home
+│   ├── organizations.ejs     # Organizations (renders images)
+│   ├── projects.ejs          # Service Projects
+│   └── categories.ejs        # Project Categories
+├── .env.example              # Sample environment variables
+├── .gitignore
+├── package.json
+└── server.js                 # Express app and routes
+```
 
-### Common Workflow Commands
+## Running locally
 
-- `npm run lint` to run ESLint against your code to find errors.
-- `npm run format` to run Prettier to automatically format your code.
-- `npm run start` starts up a local server and updates on any JS or CSS/SCSS 
-- `npm run build` to build final files when you are ready to turn in.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Create a `.env` file (or copy the sample):
+   ```bash
+   cp .env.example .env
+   ```
+3. Start the server:
+   ```bash
+   npm start
+   ```
+4. Open <http://localhost:3000> in your browser.
 
+## Deployment (Render)
+
+- **Build Command:** `npm install`
+- **Start Command:** `npm start`
+
+Render provides the `PORT` environment variable automatically, and the server reads it via `process.env.PORT`.
 
 ---
-_BYU-Pathway Worldwide improves lives through access to spiritually based, online affordable higher education. Its mission is to develop disciples of Jesus Christ who are leaders in their homes, the Church, and their communities._
 
-
-
+Developed by **Guinter Chissengue**.

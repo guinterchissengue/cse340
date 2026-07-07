@@ -1,7 +1,13 @@
-.DS_Store
-.cache
-.vscode
-web_modules
-node_modules
-dist
+# Dependencies
+node_modules/
+
+# Environment variables (never commit secrets)
 .env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
