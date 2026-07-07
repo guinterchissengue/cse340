@@ -12,7 +12,7 @@
   },
   "author": "Shane Thompson",
   "license": "ISC",
-  "jest": {.
+  "jest": {
     "testEnvironment": "jsdom",
     "moduleFileExtensions": [
       "js",
