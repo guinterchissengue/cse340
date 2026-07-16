@@ -5,22 +5,23 @@
     <p>Explore our community service project categories below to find where you can make an impact.</p>
 
     <div class="grid-container">
-        <div class="card">
-            <h3>Environmental</h3>
-            <p>Protecting habitats, clean-up initiatives, and sustainability programs.</p>
-        </div>
-        <div class="card">
-            <h3>Educational</h3>
-            <p>Tutoring, mentoring, and school support services for all ages.</p>
-        </div>
-        <div class="card">
-            <h3>Community Service</h3>
-            <p>Local outreach, food drives, and building stronger neighborhoods.</p>
-        </div>
-        <div class="card">
-            <h3>Health and Wellness</h3>
-            <p>Promoting physical and mental health, and supporting local clinics.</p>
-        </div>
+        <!-- Check if we actually have categories coming from the database -->
+        <% if (categories && categories.length > 0) { %>
+            <% categories.forEach(category => { %>
+                <div class="card" data-id="<%= category.category_id %>">
+                    <!-- Dynamic title from the database -->
+                    <h3><%= category.name %></h3>
+                    
+                    <!-- Friendly reminder for next week's task -->
+                    <p>Discover projects related to <%= category.name.toLowerCase() %> initiatives.</p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <!-- Clean fallback state if the database table is empty -->
+            <div class="no-data-alert">
+                <p>No categories found. Make sure your database is seeded properly!</p>
+            </div>
+        <% } %>
     </div>
 </main>
 
