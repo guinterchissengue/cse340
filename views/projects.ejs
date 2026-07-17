@@ -5,22 +5,28 @@
     <p>Roll up your sleeves and get involved. Here are some of the current service projects looking for volunteers like you.</p>
 
     <div class="grid-container">
-        <div class="card">
-            <h3>Riverside Clean-Up Day</h3>
-            <p>Join a morning of trail and riverbank clean-up to keep our green spaces healthy and welcoming.</p>
-        </div>
-        <div class="card">
-            <h3>After-School Reading Buddies</h3>
-            <p>Spend an hour a week helping elementary students build confidence and a love of reading.</p>
-        </div>
-        <div class="card">
-            <h3>Community Food Drive</h3>
-            <p>Help collect, sort, and distribute food to families served by the local food bank.</p>
-        </div>
-        <div class="card">
-            <h3>Neighborhood Health Fair</h3>
-            <p>Volunteer at a free health fair offering screenings, resources, and wellness activities.</p>
-        </div>
+        <!-- Check if we actually have projects coming from the database -->
+        <% if (projects && projects.length > 0) { %>
+            <% projects.forEach(project => { %>
+                <div class="card" data-id="<%= project.project_id %>">
+                    <h3><%= project.title %></h3>
+                    <p><%= project.description %></p>
+                    <p class="project-org">Led by <%= project.organization_name %></p>
+                    <% if (project.categories && project.categories.length > 0) { %>
+                        <div class="tag-list">
+                            <% project.categories.forEach(category => { %>
+                                <span class="tag"><%= category %></span>
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <!-- Clean fallback state if the database table is empty -->
+            <div class="no-data-alert">
+                <p>No projects found. Make sure your database is seeded properly!</p>
+            </div>
+        <% } %>
     </div>
 </main>
 

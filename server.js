@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import 'dotenv/config';
+import routes from './src/routes/index.js';
 
 // Create the Express application
 const app = express();
@@ -22,46 +23,9 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files (CSS, images, JavaScript, etc.) from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Reusable helper that renders an EJS page and safely handles errors.
-// A callback is passed to res.render so we can await the generated HTML and
-// return a clean 500 response if a template fails to render.
-const renderPage = async (res, view, title) => {
-    try {
-        const html = await new Promise((resolve, reject) => {
-            res.render(view, { title }, (error, rendered) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(rendered);
-                }
-            });
-        });
-        res.send(html);
-    } catch (error) {
-        console.error(`Failed to render "${view}":`, error.message);
-        res.status(500).send('Internal Server Error');
-    }
-};
-
-// Home page route
-app.get('/', async (req, res) => {
-    await renderPage(res, 'index', 'Home');
-});
-
-// Organizations page route
-app.get('/organizations', async (req, res) => {
-    await renderPage(res, 'organizations', 'Organizations');
-});
-
-// Service Projects page route
-app.get('/projects', async (req, res) => {
-    await renderPage(res, 'projects', 'Service Projects');
-});
-
-// Project Categories page route
-app.get('/categories', async (req, res) => {
-    await renderPage(res, 'categories', 'Project Categories');
-});
+// All page routes (home, organizations, projects, categories) live in
+// src/routes/index.js and pull their data from the src/models files.
+app.use('/', routes);
 
 // Start the Express server and listen for incoming requests
 app.listen(PORT, () => {

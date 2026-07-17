@@ -5,26 +5,23 @@
     <p>These partner organizations lead volunteer efforts across our community. Explore their work and find one whose mission speaks to you.</p>
 
     <div class="grid-container">
-        <div class="card org-card">
-            <img class="org-image" src="/images/org-green-earth.svg" alt="Green Earth Alliance logo showing a leaf">
-            <h3>Green Earth Alliance</h3>
-            <p>Leads clean-up drives, tree planting, and sustainability education to protect local habitats.</p>
-        </div>
-        <div class="card org-card">
-            <img class="org-image" src="/images/org-bright-futures.svg" alt="Bright Futures Education logo showing an open book">
-            <h3>Bright Futures Education</h3>
-            <p>Provides tutoring, mentoring, and school supply drives for students of every age.</p>
-        </div>
-        <div class="card org-card">
-            <img class="org-image" src="/images/org-neighborhood-care.svg" alt="Neighborhood Care Network logo showing people together">
-            <h3>Neighborhood Care Network</h3>
-            <p>Organizes food drives, home repairs, and local outreach to build stronger neighborhoods.</p>
-        </div>
-        <div class="card org-card">
-            <img class="org-image" src="/images/org-wellness-together.svg" alt="Wellness Together logo showing a heart">
-            <h3>Wellness Together</h3>
-            <p>Supports clinics and wellness events that promote physical and mental health for all.</p>
-        </div>
+        <!-- Check if we actually have organizations coming from the database -->
+        <% if (organizations && organizations.length > 0) { %>
+            <% organizations.forEach(org => { %>
+                <div class="card org-card" data-id="<%= org.org_id %>">
+                    <% if (org.logo_url) { %>
+                        <img class="org-image" src="<%= org.logo_url %>" alt="<%= org.name %> logo">
+                    <% } %>
+                    <h3><%= org.name %></h3>
+                    <p><%= org.description %></p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <!-- Clean fallback state if the database table is empty -->
+            <div class="no-data-alert">
+                <p>No organizations found. Make sure your database is seeded properly!</p>
+            </div>
+        <% } %>
     </div>
 </main>
 

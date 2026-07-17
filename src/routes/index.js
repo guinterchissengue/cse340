@@ -1,27 +1,64 @@
-// ==========================================
-// Imports & Configurations
-// ==========================================
-// Import our newly created category model
-const categoryModel = require('./src/models/categories'); 
+// src/routes/index.js
+import { Router } from 'express';
+import organizationModel from '../models/organizations.js';
+import projectModel from '../models/projects.js';
+import categoryModel from '../models/categories.js';
 
-// ... (your existing Express setup and routes) ...
+const router = Router();
 
 // ==========================================
-// Category Routes (W02 Assignment)
+// Home Route
 // ==========================================
-app.get('/categories', async (req, res) => {
+router.get('/', async (req, res) => {
+    res.render('index', { title: 'Home' });
+});
+
+// ==========================================
+// Organization Routes
+// ==========================================
+router.get('/organizations', async (req, res) => {
     try {
-        // 1. Fetch categories asynchronously from the database
-        const categoriesList = await categoryModel.getAllCategories();
-        
-        // 2. Render the template and pass down the database records
-        res.render('categories', { 
-            title: 'Project Categories',
-            categories: categoriesList 
+        const organizationsList = await organizationModel.getAllOrganizations();
+        res.render('organizations', {
+            title: 'Organizations',
+            organizations: organizationsList
         });
     } catch (error) {
-        // If something blows up, log it and send a clean 500 error page
+        console.error('Route Error on GET /organizations:', error);
+        res.status(500).send('Something went wrong while fetching organizations. Please check server logs.');
+    }
+});
+
+// ==========================================
+// Service Project Routes
+// ==========================================
+router.get('/projects', async (req, res) => {
+    try {
+        const projectsList = await projectModel.getAllProjects();
+        res.render('projects', {
+            title: 'Service Projects',
+            projects: projectsList
+        });
+    } catch (error) {
+        console.error('Route Error on GET /projects:', error);
+        res.status(500).send('Something went wrong while fetching projects. Please check server logs.');
+    }
+});
+
+// ==========================================
+// Category Routes
+// ==========================================
+router.get('/categories', async (req, res) => {
+    try {
+        const categoriesList = await categoryModel.getAllCategories();
+        res.render('categories', {
+            title: 'Project Categories',
+            categories: categoriesList
+        });
+    } catch (error) {
         console.error('Route Error on GET /categories:', error);
         res.status(500).send('Something went wrong while fetching categories. Please check server logs.');
     }
 });
+
+export default router;
