@@ -12,6 +12,10 @@
                     <h3><%= project.title %></h3>
                     <p><%= project.description %></p>
                     <p class="project-org">Led by <%= project.organization_name %></p>
+                    <p class="project-meta">
+                        <span class="project-location">📍 <%= project.location %></span>
+                        <span class="project-date">🗓️ <%= new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+                    </p>
                     <% if (project.categories && project.categories.length > 0) { %>
                         <div class="tag-list">
                             <% project.categories.forEach(category => { %>

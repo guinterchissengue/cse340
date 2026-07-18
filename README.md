@@ -6,7 +6,7 @@ A server-rendered web application built for the **CSE 340 – Web Backend** cour
 
 - Node.js and Express server with EJS as the view engine
 - Pages for **Home**, **Organizations**, **Service Projects**, and **Categories**, all rendered from live PostgreSQL data
-- `organizations` → `projects` one-to-many relationship, and `projects` ↔ `categories` many-to-many relationship (via the `project_categories` join table)
+- `organization` → `project` one-to-many relationship, and `project` ↔ `categories` many-to-many relationship (via the `project_categories` join table)
 - Reusable `header` and `footer` EJS partials shared across every page
 - Static CSS and images served from the `public/` folder
 - Responsive, accessible, professional styling
@@ -27,7 +27,7 @@ cse340/
 │   │   └── categories.js     # getAllCategories()
 │   ├── routes/
 │   │   └── index.js          # All page routes, wired to the models above
-│   └── setup.sql             # Schema + seed data for organizations, projects, categories
+│   └── setup.sql             # Schema + seed data for organization, project, categories
 ├── views/
 │   ├── partials/
 │   │   ├── header.ejs        # Shared head + navigation

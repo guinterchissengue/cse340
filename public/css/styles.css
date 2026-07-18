@@ -345,3 +345,23 @@ footer {
   color: #4a5568;
   text-align: center;
 }
+
+.org-contact {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.org-contact a {
+  color: #0284c7;
+  text-decoration: underline;
+}
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #4a5568;
+}

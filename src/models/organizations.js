@@ -9,8 +9,8 @@ import pool from '../database/connection.js';
  */
 async function getAllOrganizations() {
     const queryText = `
-        SELECT org_id, name, description, logo_url
-        FROM organizations
+        SELECT organization_id, name, description, contact_email, logo_url
+        FROM organization
         ORDER BY name ASC;
     `;
 
