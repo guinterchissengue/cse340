@@ -1,12 +1,5 @@
 -- =====================================================================
 -- src/setup.sql
--- Completely (re)creates the Community Service Hub database schema
--- and seeds it with sample data. Safe to run repeatedly: every table
--- is dropped first, so this script always leaves the database in a
--- known-good state (this is also what fixes the "relation does not
--- exist" error on Render -- see run-setup.js / README for how this
--- file gets executed against the deployed database).
--- =====================================================================
 
 -- Drop child tables before the tables they reference so the
 -- DROP statements never fail because of a foreign key constraint.
