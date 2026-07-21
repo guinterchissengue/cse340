@@ -6,8 +6,8 @@ async function runSetup() {
     try {
         console.log('A ligar à base de dados do Render e a executar o setup...');
         
-        // Caminho apontando corretamente para dentro de src/routes
-        const sqlPath = path.resolve('src/routes/setup.sql'); 
+        // Caminho fixo direto a apontar para o ficheiro na raiz
+        const sqlPath = path.join(process.cwd(), 'setup.sql');
         const sqlQuery = fs.readFileSync(sqlPath, 'utf8');
 
         await pool.query(sqlQuery);
