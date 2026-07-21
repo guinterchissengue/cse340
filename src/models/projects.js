@@ -3,7 +3,7 @@ import pool from '../database/connection.js';
 /* ***************************
  * Fetch all projects from the database
  * ************************** */
-async function getProjects() {
+async function getAllProjects() {
     try {
         // Grab every project along with the organization's name to display on views
         const result = await pool.query(`
@@ -40,6 +40,6 @@ async function getProjectsByOrganizationId(orgId) {
 }
 
 export default {
-    getProjects,
+    getAllProjects,
     getProjectsByOrganizationId
 };

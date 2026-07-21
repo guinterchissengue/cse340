@@ -8,7 +8,8 @@ import pool from '../database/connection.js';
  * @returns {Promise<Array>} List of category objects
  */
 async function getAllCategories() {
-    const queryText = 'SELECT category_id, name FROM categories ORDER BY name ASC;';
+    // Corrigido de 'categories' para 'category' para bater certo com a estrutura da base de dados
+    const queryText = 'SELECT category_id, name FROM category ORDER BY name ASC;';
 
     try {
         // Run the query against our pg pool
