@@ -1,28 +1,39 @@
-// src/models/organizations.js
-import pool from '../database/connection.js';
+const pool = require('../database/connection');
 
-/**
- * Fetch all partner organizations from the database.
- * Sorted alphabetically to keep the UI predictable.
- *
- * @returns {Promise<Array>} List of organization objects
- */
-async function getAllOrganizations() {
-    const queryText = `
-        SELECT organization_id, name, description, contact_email, logo_url
-        FROM organization
-        ORDER BY name ASC;
-    `;
-
+/* ***************************
+ *  Get all organizations
+ * ************************** */
+async function getOrganizations() {
     try {
-        const result = await pool.query(queryText);
+        // Retrieve all organizations, sorted alphabetically by name
+        const result = await pool.query(
+            "SELECT organization_id, name, description, website, contact_email, image_path FROM organization ORDER BY name;"
+        );
         return result.rows;
     } catch (error) {
-        console.error('Database Error in getAllOrganizations model:', error.message);
+        console.error("getOrganizations error: " + error);
         throw error;
     }
 }
 
-export default {
-    getAllOrganizations
+/* ***************************
+ *  Get organization by ID
+ * ************************** */
+async function getOrganizationById(id) {
+    try {
+        // Retrieve a single organization using its unique ID
+        const result = await pool.query(
+            "SELECT organization_id, name, description, website, contact_email, image_path FROM organization WHERE organization_id = $1;",
+            [id]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("getOrganizationById error: " + error);
+        throw error;
+    }
+}
+
+module.exports = {
+    getOrganizations,
+    getOrganizationById
 };

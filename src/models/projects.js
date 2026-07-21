@@ -1,44 +1,45 @@
-// src/models/projects.js
-import pool from '../database/connection.js';
+const pool = require('../database/connection');
 
-/**
- * Fetch all service projects from the database, along with the name of the
- * organization that leads each project and the list of categories it
- * belongs to. Demonstrates the organization -> project (one-to-many) and
- * project -> categories (many-to-many via project_categories) relationships.
- *
- * @returns {Promise<Array>} List of project objects
- */
-async function getAllProjects() {
-    const queryText = `
-        SELECT
-            p.project_id,
-            p.title,
-            p.description,
-            p.location,
-            p.date,
-            o.name AS organization_name,
-            COALESCE(
-                ARRAY_AGG(c.name ORDER BY c.name) FILTER (WHERE c.name IS NOT NULL),
-                '{}'
-            ) AS categories
-        FROM project p
-        JOIN organization o ON p.organization_id = o.organization_id
-        LEFT JOIN project_categories pc ON pc.project_id = p.project_id
-        LEFT JOIN categories c ON c.category_id = pc.category_id
-        GROUP BY p.project_id, p.title, p.description, p.location, p.date, o.name
-        ORDER BY p.date ASC;
-    `;
-
+/* ***************************
+ *  Get all projects
+ * ************************** */
+async function getProjects() {
     try {
-        const result = await pool.query(queryText);
+        // Retrieve every project together with its organization's name
+        const result = await pool.query(`
+            SELECT p.project_id, p.organization_id, p.title, p.description, p.location, p.date, o.name AS organization_name 
+            FROM project p 
+            JOIN organization o ON p.organization_id = o.organization_id 
+            ORDER BY p.date DESC;
+        `);
         return result.rows;
     } catch (error) {
-        console.error('Database Error in getAllProjects model:', error.message);
+        console.error("getProjects error: " + error);
         throw error;
     }
 }
 
-export default {
-    getAllProjects
+/* ***************************
+ *  Get projects by organization ID
+ * ************************** */
+async function getProjectsByOrganizationId(orgId) {
+    try {
+        // Retrieve all projects that belong to the selected organization
+        const result = await pool.query(`
+            SELECT p.project_id, p.organization_id, p.title, p.description, p.location, p.date, o.name AS organization_name 
+            FROM project p 
+            JOIN organization o ON p.organization_id = o.organization_id 
+            WHERE p.organization_id = $1
+            ORDER BY p.date DESC;
+        `, [orgId]);
+        return result.rows;
+    } catch (error) {
+        console.error("getProjectsByOrganizationId error: " + error);
+        throw error;
+    }
+}
+
+module.exports = {
+    getProjects,
+    getProjectsByOrganizationId
 };
