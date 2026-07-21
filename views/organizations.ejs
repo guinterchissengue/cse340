@@ -9,8 +9,8 @@
         <% if (organizations && organizations.length > 0) { %>
             <% organizations.forEach(org => { %>
                 <div class="card org-card" data-id="<%= org.organization_id %>">
-                    <% if (org.logo_url) { %>
-                        <img class="org-image" src="<%= org.logo_url %>" alt="<%= org.name %> logo">
+                    <% if (org.image_path) { %>
+                        <img class="org-image" src="<%= org.image_path %>" alt="<%= org.name %> logo">
                     <% } %>
                     <h3><%= org.name %></h3>
                     <p><%= org.description %></p>
