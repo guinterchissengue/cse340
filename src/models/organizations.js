@@ -3,7 +3,7 @@ import pool from '../database/connection.js';
 /* ***************************
  * Fetch all organizations from the database
  * ************************** */
-async function getOrganizations() {
+async function getAllOrganizations() {
     try {
         // Retrieve all organizations sorted alphabetically, including the contact email needed for the views
         const result = await pool.query(
@@ -34,6 +34,6 @@ async function getOrganizationById(id) {
 }
 
 export default {
-    getOrganizations,
+    getAllOrganizations,
     getOrganizationById
 };

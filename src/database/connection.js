@@ -1,20 +1,16 @@
-// src/database/connection.js
-// Single shared PostgreSQL connection pool, reused by every model file.
 import pg from 'pg';
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const { Pool } = pg;
+const Pool = pg.Pool;
+
+// Verifica se está a rodar localmente (localhost) ou na nuvem (Render)
+const isLocal = process.env.DATABASE_URL && process.env.DATABASE_URL.includes('localhost');
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    // Render's managed Postgres requires SSL; local development typically does not.
-    ssl: process.env.DATABASE_URL && process.env.DATABASE_URL.includes('render.com')
-        ? { rejectUnauthorized: false }
-        : false
-});
-
-pool.on('error', (error) => {
-    console.error('Unexpected error on idle PostgreSQL client:', error.message);
+    // Ativa o SSL apenas se não for localhost
+    ssl: isLocal ? false : { rejectUnauthorized: false }
 });
 
 export default pool;
