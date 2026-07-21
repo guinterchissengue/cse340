@@ -1,39 +1,39 @@
-const pool = require('../database/connection');
+import pool from '../database/connection.js';
 
 /* ***************************
- *  Get all organizations
+ * Fetch all organizations from the database
  * ************************** */
 async function getOrganizations() {
     try {
-        // Retrieve all organizations, sorted alphabetically by name
+        // Retrieve all organizations sorted alphabetically, including the contact email needed for the views
         const result = await pool.query(
             "SELECT organization_id, name, description, website, contact_email, image_path FROM organization ORDER BY name;"
         );
         return result.rows;
     } catch (error) {
-        console.error("getOrganizations error: " + error);
+        console.error("Failed to fetch organizations list: ", error);
         throw error;
     }
 }
 
 /* ***************************
- *  Get organization by ID
+ * Fetch a single organization by its ID
  * ************************** */
 async function getOrganizationById(id) {
     try {
-        // Retrieve a single organization using its unique ID
+        // Look up a specific organization by ID to display its detailed profile
         const result = await pool.query(
             "SELECT organization_id, name, description, website, contact_email, image_path FROM organization WHERE organization_id = $1;",
             [id]
         );
         return result.rows[0];
     } catch (error) {
-        console.error("getOrganizationById error: " + error);
+        console.error("Failed to fetch organization with ID " + id + ": ", error);
         throw error;
     }
 }
 
-module.exports = {
+export default {
     getOrganizations,
     getOrganizationById
 };

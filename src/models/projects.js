@@ -1,11 +1,11 @@
-const pool = require('../database/connection');
+import pool from '../database/connection.js';
 
 /* ***************************
- *  Get all projects
+ * Fetch all projects from the database
  * ************************** */
 async function getProjects() {
     try {
-        // Retrieve every project together with its organization's name
+        // Grab every project along with the organization's name to display on views
         const result = await pool.query(`
             SELECT p.project_id, p.organization_id, p.title, p.description, p.location, p.date, o.name AS organization_name 
             FROM project p 
@@ -14,17 +14,17 @@ async function getProjects() {
         `);
         return result.rows;
     } catch (error) {
-        console.error("getProjects error: " + error);
+        console.error("Failed to fetch projects list: ", error);
         throw error;
     }
 }
 
 /* ***************************
- *  Get projects by organization ID
+ * Fetch projects filtered by organization ID
  * ************************** */
 async function getProjectsByOrganizationId(orgId) {
     try {
-        // Retrieve all projects that belong to the selected organization
+        // Retrieve only the projects linked to a specific organization
         const result = await pool.query(`
             SELECT p.project_id, p.organization_id, p.title, p.description, p.location, p.date, o.name AS organization_name 
             FROM project p 
@@ -34,12 +34,12 @@ async function getProjectsByOrganizationId(orgId) {
         `, [orgId]);
         return result.rows;
     } catch (error) {
-        console.error("getProjectsByOrganizationId error: " + error);
+        console.error("Failed to fetch projects for organization ID " + orgId + ": ", error);
         throw error;
     }
 }
 
-module.exports = {
+export default {
     getProjects,
     getProjectsByOrganizationId
 };
