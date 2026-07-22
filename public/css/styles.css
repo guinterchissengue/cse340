@@ -336,6 +336,26 @@ footer {
   padding: 0.25rem 0.75rem;
   font-size: 0.85rem;
   font-weight: 500;
+  text-decoration: none;
+}
+
+.tag:hover, .tag:focus {
+  background: #e2e8f0;
+}
+
+.breadcrumb {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumb a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.breadcrumb a:hover, .breadcrumb a:focus {
+  text-decoration: underline;
 }
 
 .no-data-alert {

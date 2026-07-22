@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<main id="main-content">
+    <p class="breadcrumb"><a href="/projects">&larr; Back to Service Projects</a></p>
+
+    <h1><%= project.title %></h1>
+    <p class="project-org">Led by <a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></p>
+
+    <p><%= project.description %></p>
+
+    <p class="project-meta">
+        <span class="project-location">📍 <%= project.location %></span>
+        <span class="project-date">🗓️ <%= new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+    </p>
+
+    <% if (categories && categories.length > 0) { %>
+        <div class="tag-list">
+            <% categories.forEach(category => { %>
+                <a href="/category/<%= category.category_id %>" class="tag"><%= category.name %></a>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="no-data-alert">
+            <p>This project hasn't been tagged with any categories yet.</p>
+        </div>
+    <% } %>
+</main>
+
+<%- include('partials/footer') %>

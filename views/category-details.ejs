@@ -1,11 +1,12 @@
 <%- include('partials/header') %>
 
 <main id="main-content">
-    <h1><%= title %></h1>
-    <p>Roll up your sleeves and get involved. Here are some of the current service projects looking for volunteers like you.</p>
+    <p class="breadcrumb"><a href="/categories">&larr; Back to Categories</a></p>
+
+    <h1><%= category.name %></h1>
+    <p>Browse every service project tagged under <%= category.name %>.</p>
 
     <div class="grid-container">
-        <!-- Check if we actually have projects coming from the database -->
         <% if (projects && projects.length > 0) { %>
             <% projects.forEach(project => { %>
                 <div class="card" data-id="<%= project.project_id %>">
@@ -16,20 +17,12 @@
                         <span class="project-location">📍 <%= project.location %></span>
                         <span class="project-date">🗓️ <%= new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
                     </p>
-                    <% if (project.categories && project.categories.length > 0) { %>
-                        <div class="tag-list">
-                            <% project.categories.forEach(category => { %>
-                                <a href="/category/<%= category.category_id %>" class="tag"><%= category.name %></a>
-                            <% }) %>
-                        </div>
-                    <% } %>
                     <a href="/project/<%= project.project_id %>" class="card-link">View Details &rarr;</a>
                 </div>
             <% }) %>
         <% } else { %>
-            <!-- Clean fallback state if the database table is empty -->
             <div class="no-data-alert">
-                <p>No projects found. Make sure your database is seeded properly!</p>
+                <p>No service projects are tagged under this category yet.</p>
             </div>
         <% } %>
     </div>

@@ -9,11 +9,12 @@
         <% if (categories && categories.length > 0) { %>
             <% categories.forEach(category => { %>
                 <div class="card" data-id="<%= category.category_id %>">
-                    <!-- Dynamic title from the database -->
-                    <h3><%= category.name %></h3>
-                    
-                    <!-- Friendly reminder for next week's task -->
+                    <!-- Dynamic title from the database, linking to its details page -->
+                    <h3><a href="/category/<%= category.category_id %>"><%= category.name %></a></h3>
+
                     <p>Discover projects related to <%= category.name.toLowerCase() %> initiatives.</p>
+
+                    <a href="/category/<%= category.category_id %>" class="card-link">View Projects &rarr;</a>
                 </div>
             <% }) %>
         <% } else { %>

@@ -8,7 +8,7 @@ import pool from '../database/connection.js';
  * @returns {Promise<Array>} List of category objects
  */
 async function getAllCategories() {
-    // Changed from 'categories' to 'category' to match the database schema.
+    // Corrigido de 'categories' para 'category' para bater certo com a estrutura da base de dados
     const queryText = 'SELECT category_id, name FROM category ORDER BY name ASC;';
 
     try {
@@ -22,6 +22,51 @@ async function getAllCategories() {
     }
 }
 
+/**
+ * Fetch a single category by its ID.
+ *
+ * @param {number|string} id - The category_id to look up
+ * @returns {Promise<Object|undefined>} The matching category, or undefined if not found
+ */
+async function getCategoryById(id) {
+    const queryText = 'SELECT category_id, name FROM category WHERE category_id = $1;';
+
+    try {
+        const result = await pool.query(queryText, [id]);
+        return result.rows[0];
+    } catch (error) {
+        console.error('Database Error in getCategoryById model:', error.message);
+        throw error;
+    }
+}
+
+/**
+ * Fetch every category a given project belongs to, via the
+ * project_category join table.
+ *
+ * @param {number|string} projectId - The project_id to look up categories for
+ * @returns {Promise<Array>} List of category objects
+ */
+async function getCategoriesByProjectId(projectId) {
+    const queryText = `
+        SELECT c.category_id, c.name
+        FROM category c
+        JOIN project_category pc ON pc.category_id = c.category_id
+        WHERE pc.project_id = $1
+        ORDER BY c.name ASC;
+    `;
+
+    try {
+        const result = await pool.query(queryText, [projectId]);
+        return result.rows;
+    } catch (error) {
+        console.error('Database Error in getCategoriesByProjectId model:', error.message);
+        throw error;
+    }
+}
+
 export default {
-    getAllCategories
+    getAllCategories,
+    getCategoryById,
+    getCategoriesByProjectId
 };

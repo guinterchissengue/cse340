@@ -4,7 +4,7 @@ dotenv.config();
 
 const Pool = pg.Pool;
 
-// Ensures secure SSL support in cloud environments (Render) while remaining flexible for local development.
+// Garante suporte SSL seguro na nuvem (Render) e flexível em desenvolvimento local
 const isProduction = process.env.NODE_ENV === 'production' || (process.env.DATABASE_URL && process.env.DATABASE_URL.includes('render.com'));
 
 const pool = new Pool({

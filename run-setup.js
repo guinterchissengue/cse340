@@ -1,5 +1,10 @@
 // run-setup.js
 // Runs src/setup.sql against the database pointed to by DATABASE_URL.
+// This is what actually creates the tables and seed data -- run it
+// once locally (npm run db:setup) and again any time the Render
+// database needs to be (re)initialized, e.g. from the Render Shell,
+// or automatically on every deploy if it's added to the Build Command
+// (see README "Deployment (Render)" section for the exact command).
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

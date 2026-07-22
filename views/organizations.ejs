@@ -12,11 +12,12 @@
                     <% if (org.image_path) { %>
                         <img class="org-image" src="<%= org.image_path %>" alt="<%= org.name %> logo">
                     <% } %>
-                    <h3><%= org.name %></h3>
+                    <h3><a href="/organization/<%= org.organization_id %>"><%= org.name %></a></h3>
                     <p><%= org.description %></p>
                     <p class="org-contact">
                         Contact: <a href="mailto:<%= org.contact_email %>"><%= org.contact_email %></a>
                     </p>
+                    <a href="/organization/<%= org.organization_id %>" class="card-link">View Projects &rarr;</a>
                 </div>
             <% }) %>
         <% } else { %>
