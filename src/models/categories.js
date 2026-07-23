@@ -8,7 +8,7 @@ import pool from '../database/connection.js';
  * @returns {Promise<Array>} List of category objects
  */
 async function getAllCategories() {
-    // Corrigido de 'categories' para 'category' para bater certo com a estrutura da base de dados
+    // Matches the 'category' table (singular) as defined in src/setup.sql
     const queryText = 'SELECT category_id, name FROM category ORDER BY name ASC;';
 
     try {

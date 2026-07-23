@@ -1,5 +1,6 @@
 // src/routes/index.js
 import { Router } from 'express';
+import homeController from '../controllers/homeController.js';
 import organizationController from '../controllers/organizationController.js';
 import projectController from '../controllers/projectController.js';
 import categoryController from '../controllers/categoryController.js';
@@ -9,9 +10,7 @@ const router = Router();
 // ==========================================
 // Home Route
 // ==========================================
-router.get('/', async (req, res) => {
-    res.render('index', { title: 'Home' });
-});
+router.get('/', homeController.getHome);
 
 // ==========================================
 // Organization Routes
