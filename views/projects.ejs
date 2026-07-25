@@ -4,6 +4,8 @@
     <h1><%= title %></h1>
     <p>Roll up your sleeves and get involved. Here are some of the current service projects looking for volunteers like you.</p>
 
+    <p><a href="/new-project" class="btn btn-primary">+ New Project</a></p>
+
     <div class="grid-container">
         <!-- Check if we actually have projects coming from the database -->
         <% if (projects && projects.length > 0) { %>
@@ -24,6 +26,7 @@
                         </div>
                     <% } %>
                     <a href="/project/<%= project.project_id %>" class="card-link">View Details &rarr;</a>
+                    <a href="/edit-project/<%= project.project_id %>" class="card-link">Edit &rarr;</a>
                 </div>
             <% }) %>
         <% } else { %>

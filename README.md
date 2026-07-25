@@ -75,6 +75,8 @@ cse340/
 
 The build command installs dependencies and then runs `src/setup.sql` against the database at `DATABASE_URL` (set this env var on the Render web service to your Postgres instance's **Internal Database URL**). `setup.sql` drops and recreates every table on each run, so the schema is always in sync with this repo — this is what fixes the `relation "organization" does not exist` error, which happens whenever the Postgres database itself has no tables yet because setup.sql was never executed against it.
 
+Also set a `SESSION_SECRET` environment variable on the Render service (any long random string) — it signs the session cookie that flash messages rely on. The app falls back to a built-in default if it's missing, so this isn't strictly required to run, but a real deployment shouldn't rely on that default.
+
 If you'd rather not re-run setup.sql on every deploy, use `npm install` as the build command and instead run `npm run db:setup` once from the Render Shell (Dashboard → your web service → **Shell**) after the database is provisioned.
 
 Render provides the `PORT` environment variable automatically, and the server reads it via `process.env.PORT`.

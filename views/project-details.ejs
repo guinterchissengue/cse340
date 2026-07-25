@@ -24,6 +24,11 @@
             <p>This project hasn't been tagged with any categories yet.</p>
         </div>
     <% } %>
+
+    <div class="form-actions">
+        <a href="/project/<%= project.project_id %>/categories" class="btn btn-secondary">Update Categories</a>
+        <a href="/edit-project/<%= project.project_id %>" class="btn btn-secondary">Edit Project</a>
+    </div>
 </main>
 
 <%- include('partials/footer') %>

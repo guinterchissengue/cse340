@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+<main id="main-content">
+    <p class="breadcrumb"><a href="/projects">&larr; Back to Service Projects</a></p>
+
+    <h1><%= title %></h1>
+    <p>Add a new service project to the Community Service Hub.</p>
+
+    <% if (errors && errors.length > 0) { %>
+        <div class="form-errors">
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/new-project" method="POST" class="card form-card" novalidate>
+        <div class="form-group">
+            <label for="organization_id">Organization</label>
+            <select id="organization_id" name="organization_id" required>
+                <option value="" disabled <%= !values.organization_id ? 'selected' : '' %>>Select an organization&hellip;</option>
+                <% organizations.forEach(org => { %>
+                    <option value="<%= org.organization_id %>" <%= String(values.organization_id) === String(org.organization_id) ? 'selected' : '' %>>
+                        <%= org.name %>
+                    </option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Project Title</label>
+            <input type="text" id="title" name="title" value="<%= values.title %>" required maxlength="150">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required maxlength="2000"><%= values.description %></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" value="<%= values.location %>" required maxlength="150">
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" value="<%= values.date %>" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Project</button>
+    </form>
+</main>
+
+<%- include('partials/footer') %>

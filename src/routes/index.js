@@ -17,17 +17,31 @@ router.get('/', homeController.getHome);
 // ==========================================
 router.get('/organizations', organizationController.getOrganizations);
 router.get('/organization/:id', organizationController.getOrganizationDetails);
+router.get('/new-organization', organizationController.getNewOrganizationForm);
+router.post('/new-organization', organizationController.postNewOrganization);
+router.get('/edit-organization/:id', organizationController.getEditOrganizationForm);
+router.post('/edit-organization/:id', organizationController.postEditOrganization);
 
 // ==========================================
 // Service Project Routes
 // ==========================================
 router.get('/projects', projectController.getProjects);
 router.get('/project/:id', projectController.getProjectDetails);
+router.get('/new-project', projectController.getNewProjectForm);
+router.post('/new-project', projectController.postNewProject);
+router.get('/edit-project/:id', projectController.getEditProjectForm);
+router.post('/edit-project/:id', projectController.postEditProject);
+router.get('/project/:id/categories', projectController.getAssignCategoriesForm);
+router.post('/project/:id/categories', projectController.postAssignCategories);
 
 // ==========================================
 // Category Routes
 // ==========================================
 router.get('/categories', categoryController.getCategories);
 router.get('/category/:id', categoryController.getCategoryDetails);
+router.get('/new-category', categoryController.getNewCategoryForm);
+router.post('/new-category', categoryController.postNewCategory);
+router.get('/edit-category/:id', categoryController.getEditCategoryForm);
+router.post('/edit-category/:id', categoryController.postEditCategory);
 
 export default router;

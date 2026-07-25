@@ -4,6 +4,8 @@
     <h1><%= title %></h1>
     <p>These partner organizations lead volunteer efforts across our community. Explore their work and find one whose mission speaks to you.</p>
 
+    <p><a href="/new-organization" class="btn btn-primary">+ New Organization</a></p>
+
     <div class="grid-container">
         <!-- Check if we actually have organizations coming from the database -->
         <% if (organizations && organizations.length > 0) { %>
@@ -18,6 +20,7 @@
                         Contact: <a href="mailto:<%= org.contact_email %>"><%= org.contact_email %></a>
                     </p>
                     <a href="/organization/<%= org.organization_id %>" class="card-link">View Projects &rarr;</a>
+                    <a href="/edit-organization/<%= org.organization_id %>" class="card-link">Edit &rarr;</a>
                 </div>
             <% }) %>
         <% } else { %>

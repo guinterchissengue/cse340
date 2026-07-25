@@ -1,0 +1,49 @@
+<%- include('partials/header') %>
+
+<main id="main-content">
+    <p class="breadcrumb"><a href="/organizations">&larr; Back to Organizations</a></p>
+
+    <h1><%= title %></h1>
+    <p>Update this organization's profile.</p>
+
+    <% if (errors && errors.length > 0) { %>
+        <div class="form-errors">
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/edit-organization/<%= organizationId %>" method="POST" class="card form-card" novalidate>
+        <div class="form-group">
+            <label for="name">Organization Name</label>
+            <input type="text" id="name" name="name" value="<%= values.name %>" required maxlength="150">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required maxlength="2000"><%= values.description %></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="contact_email">Contact Email</label>
+            <input type="email" id="contact_email" name="contact_email" value="<%= values.contact_email %>" required maxlength="255">
+        </div>
+
+        <div class="form-group">
+            <label for="website">Website <span class="form-hint">(optional)</span></label>
+            <input type="url" id="website" name="website" value="<%= values.website || '' %>" maxlength="255">
+        </div>
+
+        <div class="form-group">
+            <label for="image_path">Logo Image Path <span class="form-hint">(optional, e.g. /images/org-example.svg)</span></label>
+            <input type="text" id="image_path" name="image_path" value="<%= values.image_path || '' %>" maxlength="255">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</main>
+
+<%- include('partials/footer') %>

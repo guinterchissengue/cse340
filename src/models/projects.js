@@ -129,9 +129,52 @@ async function getProjectsByCategoryId(categoryId) {
     }
 }
 
+/* ***************************
+ * Insert a new project into the database
+ * ************************** */
+async function createProject(project) {
+    const { organization_id, title, description, location, date } = project;
+
+    try {
+        const result = await pool.query(
+            `INSERT INTO project (organization_id, title, description, location, date)
+             VALUES ($1, $2, $3, $4, $5)
+             RETURNING project_id, organization_id, title, description, location, date;`,
+            [organization_id, title, description, location, date]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Failed to create project: ", error);
+        throw error;
+    }
+}
+
+/* ***************************
+ * Update an existing project
+ * ************************** */
+async function updateProject(id, project) {
+    const { organization_id, title, description, location, date } = project;
+
+    try {
+        const result = await pool.query(
+            `UPDATE project
+             SET organization_id = $1, title = $2, description = $3, location = $4, date = $5
+             WHERE project_id = $6
+             RETURNING project_id, organization_id, title, description, location, date;`,
+            [organization_id, title, description, location, date, id]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Failed to update project with ID " + id + ": ", error);
+        throw error;
+    }
+}
+
 export default {
     getAllProjects,
     getProjectsByOrganizationId,
     getProjectById,
-    getProjectsByCategoryId
+    getProjectsByCategoryId,
+    createProject,
+    updateProject
 };

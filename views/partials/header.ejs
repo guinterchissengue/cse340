@@ -26,3 +26,19 @@
             </nav>
         </div>
     </header>
+
+    <% if (typeof successMessage !== 'undefined' && successMessage.length > 0) { %>
+        <div class="flash-container">
+            <% successMessage.forEach(message => { %>
+                <div class="flash-message flash-success" role="status"><%= message %></div>
+            <% }) %>
+        </div>
+    <% } %>
+
+    <% if (typeof errorMessage !== 'undefined' && errorMessage.length > 0) { %>
+        <div class="flash-container">
+            <% errorMessage.forEach(message => { %>
+                <div class="flash-message flash-error" role="alert"><%= message %></div>
+            <% }) %>
+        </div>
+    <% } %>

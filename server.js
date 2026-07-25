@@ -1,6 +1,8 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import session from 'express-session';
+import flash from 'connect-flash';
 import 'dotenv/config';
 import routes from './src/routes/index.js';
 
@@ -23,9 +25,33 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files (CSS, images, JavaScript, etc.) from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Parse URL-encoded form bodies (application/x-www-form-urlencoded) so
+// req.body is populated for the Create/Edit forms
+app.use(express.urlencoded({ extended: true }));
+
+// Session storage backs connect-flash: flash messages are written to the
+// session right before a redirect, then read once and cleared on the very
+// next request.
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'cse340-community-service-hub',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 10 } // 10 minutes is plenty for a redirect round-trip
+}));
+app.use(flash());
+
+// Make any flash messages available to every view as successMessage /
+// errorMessage arrays, so views/partials/header.ejs can render them
+// without every controller having to pass them in manually.
+app.use((req, res, next) => {
+    res.locals.successMessage = req.flash('success');
+    res.locals.errorMessage = req.flash('error');
+    next();
+});
+
 // All page routes (home, organizations, projects, categories, and their
-// :id detail pages) live in src/routes/index.js, which delegates to
-// src/controllers/*, which pull data from src/models/*.
+// :id detail/create/edit pages) live in src/routes/index.js, which
+// delegates to src/controllers/*, which pull data from src/models/*.
 app.use('/', routes);
 
 // ==========================================

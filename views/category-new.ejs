@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<main id="main-content">
+    <p class="breadcrumb"><a href="/categories">&larr; Back to Categories</a></p>
+
+    <h1><%= title %></h1>
+    <p>Add a new category so projects can be organized and filtered by it.</p>
+
+    <% if (errors && errors.length > 0) { %>
+        <div class="form-errors">
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/new-category" method="POST" class="card form-card" novalidate>
+        <div class="form-group">
+            <label for="category_name">Category Name</label>
+            <input
+                type="text"
+                id="category_name"
+                name="category_name"
+                value="<%= values.category_name %>"
+                required
+                maxlength="100"
+            >
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Category</button>
+    </form>
+</main>
+
+<%- include('partials/footer') %>
