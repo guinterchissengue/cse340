@@ -14,6 +14,23 @@ DROP TABLE IF EXISTS project_category CASCADE;
 DROP TABLE IF EXISTS project CASCADE;
 DROP TABLE IF EXISTS organization CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS app_user CASCADE;
+
+-- ---------------------------------------------------------------------
+-- app_user: registered accounts. Named app_user (not the reserved
+-- word "user") to avoid quoting it in every query. Passwords are
+-- always stored as a bcrypt hash -- never plain text. The admin
+-- grading account (admin@example.com) is NOT seeded here because its
+-- password has to be hashed in JavaScript; it is seeded by
+-- run-setup.js immediately after this script runs.
+-- ---------------------------------------------------------------------
+CREATE TABLE app_user (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin'))
+);
 
 -- ---------------------------------------------------------------------
 -- category: the list of service themes a project can be tagged with

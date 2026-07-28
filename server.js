@@ -29,23 +29,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 // req.body is populated for the Create/Edit forms
 app.use(express.urlencoded({ extended: true }));
 
-// Session storage backs connect-flash: flash messages are written to the
-// session right before a redirect, then read once and cleared on the very
-// next request.
+// Session storage backs both connect-flash and the logged-in user
+// (req.session.user, set by authController on login/register). The
+// cookie now needs to outlive a single redirect round-trip since it
+// keeps someone logged in.
 app.use(session({
     secret: process.env.SESSION_SECRET || 'cse340-community-service-hub',
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 10 } // 10 minutes is plenty for a redirect round-trip
+    cookie: { maxAge: 1000 * 60 * 60 * 2 } // 2 hours
 }));
 app.use(flash());
 
-// Make any flash messages available to every view as successMessage /
-// errorMessage arrays, so views/partials/header.ejs can render them
-// without every controller having to pass them in manually.
+// Make any flash messages, plus the logged-in user (or null), available
+// to every view as successMessage / errorMessage / currentUser, so
+// views/partials/header.ejs can render them without every controller
+// having to pass them in manually.
 app.use((req, res, next) => {
     res.locals.successMessage = req.flash('success');
     res.locals.errorMessage = req.flash('error');
+    res.locals.currentUser = req.session.user || null;
     next();
 });
 

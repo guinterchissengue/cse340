@@ -4,7 +4,9 @@
     <h1><%= title %></h1>
     <p>Explore our community service project categories below to find where you can make an impact.</p>
 
-    <p><a href="/new-category" class="btn btn-primary">+ New Category</a></p>
+    <% if (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'admin') { %>
+        <p><a href="/new-category" class="btn btn-primary">+ New Category</a></p>
+    <% } %>
 
     <div class="grid-container">
         <!-- Check if we actually have categories coming from the database -->
@@ -17,7 +19,9 @@
                     <p>Discover projects related to <%= category.name.toLowerCase() %> initiatives.</p>
 
                     <a href="/category/<%= category.category_id %>" class="card-link">View Projects &rarr;</a>
-                    <a href="/edit-category/<%= category.category_id %>" class="card-link">Edit &rarr;</a>
+                    <% if (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'admin') { %>
+                        <a href="/edit-category/<%= category.category_id %>" class="card-link">Edit &rarr;</a>
+                    <% } %>
                 </div>
             <% }) %>
         <% } else { %>

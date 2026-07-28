@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<main id="main-content">
+    <h1><%= title %></h1>
+    <p>Welcome back, <%= user.name %>! You're logged in as <strong><%= user.role %></strong>.</p>
+
+    <div class="grid-container">
+        <div class="card">
+            <h3>Organizations</h3>
+            <p>Browse the partner organizations leading volunteer efforts.</p>
+            <a class="card-link" href="/organizations">View organizations &rarr;</a>
+        </div>
+        <div class="card">
+            <h3>Service Projects</h3>
+            <p>Browse community service projects looking for volunteers.</p>
+            <a class="card-link" href="/projects">View projects &rarr;</a>
+        </div>
+        <div class="card">
+            <h3>Categories</h3>
+            <p>Browse service projects by cause and theme.</p>
+            <a class="card-link" href="/categories">View categories &rarr;</a>
+        </div>
+        <% if (user.role === 'admin') { %>
+            <div class="card">
+                <h3>Users</h3>
+                <p>View every registered user and their assigned role.</p>
+                <a class="card-link" href="/users">View users &rarr;</a>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>
