@@ -2,8 +2,10 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import session from 'express-session';
+import pgSession from 'connect-pg-simple';
 import flash from 'connect-flash';
 import 'dotenv/config';
+import pool from './src/database/connection.js';
 import routes from './src/routes/index.js';
 
 // Create the Express application
@@ -30,10 +32,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Session storage backs both connect-flash and the logged-in user
-// (req.session.user, set by authController on login/register). The
-// cookie now needs to outlive a single redirect round-trip since it
-// keeps someone logged in.
+// (req.session.user, set by authController on login/register). Stored
+// in Postgres (not the default in-memory store) so sessions survive a
+// server restart/redeploy and don't leak memory over time; the
+// "session" table is created automatically on first run.
+const PgSessionStore = pgSession(session);
 app.use(session({
+    store: new PgSessionStore({ pool, tableName: 'session', createTableIfMissing: true }),
     secret: process.env.SESSION_SECRET || 'cse340-community-service-hub',
     resave: false,
     saveUninitialized: false,
