@@ -4,8 +4,7 @@ import homeController from '../controllers/homeController.js';
 import organizationController from '../controllers/organizationController.js';
 import projectController from '../controllers/projectController.js';
 import categoryController from '../controllers/categoryController.js';
-import authController from '../controllers/authController.js';
-import userController from '../controllers/userController.js';
+import userController from '../controllers/user.js';
 import { requireLogin, requireRole } from '../middleware/auth.js';
 
 const router = Router();
@@ -18,12 +17,12 @@ router.get('/', homeController.getHome);
 // ==========================================
 // Auth Routes (register / login / logout / dashboard)
 // ==========================================
-router.get('/register', authController.getRegisterForm);
-router.post('/register', authController.postRegister);
-router.get('/login', authController.getLoginForm);
-router.post('/login', authController.postLogin);
-router.get('/logout', authController.getLogout);
-router.get('/dashboard', requireLogin, authController.getDashboard);
+router.get('/register', userController.getRegisterForm);
+router.post('/register', userController.postRegister);
+router.get('/login', userController.getLoginForm);
+router.post('/login', userController.postLogin);
+router.get('/logout', userController.getLogout);
+router.get('/dashboard', requireLogin, userController.getDashboard);
 
 // ==========================================
 // Users Route (admin only)
