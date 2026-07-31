@@ -4,7 +4,9 @@ import homeController from '../controllers/homeController.js';
 import organizationController from '../controllers/organizationController.js';
 import projectController from '../controllers/projectController.js';
 import categoryController from '../controllers/categoryController.js';
-import userController from '../controllers/user.js';
+import authController from '../controllers/authController.js';
+import userController from '../controllers/userController.js';
+import volunteerController from '../controllers/volunteerController.js';
 import { requireLogin, requireRole } from '../middleware/auth.js';
 
 const router = Router();
@@ -17,12 +19,12 @@ router.get('/', homeController.getHome);
 // ==========================================
 // Auth Routes (register / login / logout / dashboard)
 // ==========================================
-router.get('/register', userController.getRegisterForm);
-router.post('/register', userController.postRegister);
-router.get('/login', userController.getLoginForm);
-router.post('/login', userController.postLogin);
-router.get('/logout', userController.getLogout);
-router.get('/dashboard', requireLogin, userController.getDashboard);
+router.get('/register', authController.getRegisterForm);
+router.post('/register', authController.postRegister);
+router.get('/login', authController.getLoginForm);
+router.post('/login', authController.postLogin);
+router.get('/logout', authController.getLogout);
+router.get('/dashboard', requireLogin, authController.getDashboard);
 
 // ==========================================
 // Users Route (admin only)
@@ -52,6 +54,8 @@ router.get('/edit-project/:id', requireLogin, requireRole('admin'), projectContr
 router.post('/edit-project/:id', requireLogin, requireRole('admin'), projectController.postEditProject);
 router.get('/project/:id/categories', requireLogin, requireRole('admin'), projectController.getAssignCategoriesForm);
 router.post('/project/:id/categories', requireLogin, requireRole('admin'), projectController.postAssignCategories);
+router.post('/project/:id/volunteer', requireLogin, volunteerController.postVolunteer);
+router.post('/project/:id/unvolunteer', requireLogin, volunteerController.postUnvolunteer);
 
 // ==========================================
 // Category Routes

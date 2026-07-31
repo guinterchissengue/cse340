@@ -10,6 +10,7 @@
 
 -- Drop child tables before the tables they reference so the
 -- DROP statements never fail because of a foreign key constraint.
+DROP TABLE IF EXISTS volunteer CASCADE;
 DROP TABLE IF EXISTS project_category CASCADE;
 DROP TABLE IF EXISTS project CASCADE;
 DROP TABLE IF EXISTS organization CASCADE;
@@ -74,6 +75,20 @@ CREATE TABLE project_category (
     project_id INT NOT NULL REFERENCES project(project_id) ON DELETE CASCADE,
     category_id INT NOT NULL REFERENCES category(category_id) ON DELETE CASCADE,
     UNIQUE (project_id, category_id)
+);
+
+-- ---------------------------------------------------------------------
+-- volunteer: many-to-many join table between app_user and project.
+-- A user can volunteer for many projects, and a project can have many
+-- volunteers. The composite UNIQUE constraint is what prevents the
+-- same user from volunteering for the same project twice.
+-- ---------------------------------------------------------------------
+CREATE TABLE volunteer (
+    volunteer_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES app_user(user_id) ON DELETE CASCADE,
+    project_id INT NOT NULL REFERENCES project(project_id) ON DELETE CASCADE,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    UNIQUE (user_id, project_id)
 );
 
 -- =====================================================================

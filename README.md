@@ -5,10 +5,7 @@ A server-rendered web application built for the **CSE 340 – Web Backend** cour
 ## Features
 
 - Node.js and Express server with EJS as the view engine
-- Pages for **Home**, **Organizations**, **Service Projects**, **Categories**, and a **Dashboard**, all rendered from live PostgreSQL data
-- Full user account system: registration, login, logout, and an admin-only **Users** page, with passwords hashed via bcrypt and sessions stored in Postgres (`connect-pg-simple`)
-- Route protection middleware (`requireLogin`, `requireRole`) guarding the dashboard and every admin-only create/edit page
-- Navigation and in-page action links (New/Edit buttons) shown or hidden based on whether the visitor is logged in and whether their role is `admin`
+- Pages for **Home**, **Organizations**, **Service Projects**, and **Categories**, all rendered from live PostgreSQL data
 - `organization` → `project` one-to-many relationship, and `project` ↔ `category` many-to-many relationship (via the `project_category` join table)
 - Reusable `header` and `footer` EJS partials shared across every page
 - Static CSS and images served from the `public/` folder
@@ -22,41 +19,28 @@ cse340/
 │   ├── css/styles.css        # Site styles
 │   └── images/               # SVG logos and hero illustration
 ├── src/
-│   ├── controllers/
-│   │   ├── homeController.js         # GET /
-│   │   ├── user.js                   # Register/login/logout/dashboard + admin Users list
-│   │   ├── organizationController.js # Organizations list/detail/create/edit
-│   │   ├── projectController.js      # Service Projects list/detail/create/edit + category assignment
-│   │   └── categoryController.js     # Categories list/detail/create/edit
 │   ├── database/
 │   │   └── connection.js     # Shared pg Pool, reads DATABASE_URL from .env
-│   ├── middleware/
-│   │   └── auth.js           # requireLogin, requireRole('admin') route guards
 │   ├── models/
-│   │   ├── user.js           # getUserByEmail(), getAllUsers(), createUser()
 │   │   ├── organizations.js  # getAllOrganizations(), getOrganizationById()
 │   │   ├── projects.js       # getAllProjects(), getProjectsByOrganizationId() (includes categories)
 │   │   └── categories.js     # getAllCategories()
 │   ├── routes/
-│   │   └── index.js          # All page routes, wired to the controllers above
-│   ├── utils/
-│   │   └── validation.js     # Shared server-side form validation helpers
-│   └── setup.sql             # Schema + seed data for app_user, organization, project, category, project_category
+│   │   └── index.js          # All page routes, wired to the models above
+│   └── setup.sql             # Schema + seed data for organization, project, category, project_category
 ├── run-setup.js               # Runs src/setup.sql against DATABASE_URL (npm run db:setup)
 ├── views/
 │   ├── partials/
-│   │   ├── header.ejs        # Shared head + navigation (role-aware)
+│   │   ├── header.ejs        # Shared head + navigation
 │   │   └── footer.ejs        # Shared footer + copyright
 │   ├── index.ejs             # Home
-│   ├── register.ejs / login.ejs / dashboard.ejs / users.ejs
 │   ├── organizations.ejs     # Organizations (dynamic, renders images)
 │   ├── projects.ejs          # Service Projects (dynamic, shows org + categories)
-│   ├── categories.ejs        # Project Categories (dynamic)
-│   └── 404.ejs / 500.ejs     # Error pages
+│   └── categories.ejs        # Project Categories (dynamic)
 ├── .env.example              # Sample environment variables
 ├── .gitignore
 ├── package.json
-└── server.js                 # Express app setup, session/flash config, mounts src/routes/index.js
+└── server.js                 # Express app setup, mounts src/routes/index.js
 ```
 
 ## Running locally

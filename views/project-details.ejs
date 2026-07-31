@@ -11,7 +11,25 @@
     <p class="project-meta">
         <span class="project-location">📍 <%= project.location %></span>
         <span class="project-date">🗓️ <%= new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+        <span class="project-volunteer-count">🙋 <%= volunteerCount %> volunteer<%= volunteerCount === 1 ? '' : 's' %> so far</span>
     </p>
+
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <div class="volunteer-panel">
+            <% if (isVolunteering) { %>
+                <p class="volunteer-status">✅ You are volunteering for this project.</p>
+                <form action="/project/<%= project.project_id %>/unvolunteer" method="POST">
+                    <input type="hidden" name="redirect_to" value="/project/<%= project.project_id %>">
+                    <button type="submit" class="btn btn-secondary">Remove Volunteer &mdash; Cancel Volunteering</button>
+                </form>
+            <% } else { %>
+                <form action="/project/<%= project.project_id %>/volunteer" method="POST">
+                    <input type="hidden" name="redirect_to" value="/project/<%= project.project_id %>">
+                    <button type="submit" class="btn btn-primary">Volunteer for this Project</button>
+                </form>
+            <% } %>
+        </div>
+    <% } %>
 
     <% if (categories && categories.length > 0) { %>
         <div class="tag-list">

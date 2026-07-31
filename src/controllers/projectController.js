@@ -4,6 +4,7 @@
 import projectModel from '../models/projects.js';
 import categoryModel from '../models/categories.js';
 import organizationModel from '../models/organizations.js';
+import volunteerModel from '../models/volunteers.js';
 import { requireLength, requireDate } from '../utils/validation.js';
 
 /* ***************************
@@ -41,11 +42,22 @@ async function getProjectDetails(req, res, next) {
         }
 
         const categories = await categoryModel.getCategoriesByProjectId(id);
+        const volunteerCount = await volunteerModel.countVolunteersForProject(id);
+
+        // Volunteer status only means something for a logged-in user,
+        // so guests (currentUser is null) never trigger this query and
+        // the view never sees an isVolunteering value for them.
+        let isVolunteering = false;
+        if (req.session.user) {
+            isVolunteering = await volunteerModel.isVolunteering(req.session.user.id, id);
+        }
 
         res.render('project-details', {
             title: project.title,
             project,
-            categories
+            categories,
+            volunteerCount,
+            isVolunteering
         });
     } catch (error) {
         console.error('Controller Error in getProjectDetails:', error);

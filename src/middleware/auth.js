@@ -1,8 +1,7 @@
 // src/middleware/auth.js
 // Route-guarding middleware shared by every protected route. Both
 // functions read the logged-in user off the session, which is only
-// ever set in one place: userController.postLogin/postRegister (in
-// src/controllers/user.js). They
+// ever set in one place: authController.postLogin/postRegister. They
 // must run after express-session and connect-flash are configured in
 // server.js (they already run first for every request).
 

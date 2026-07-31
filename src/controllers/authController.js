@@ -3,6 +3,7 @@
 // then choose which view to render and what to pass it.
 import bcrypt from 'bcryptjs';
 import userModel from '../models/users.js';
+import volunteerModel from '../models/volunteers.js';
 import { requireLength, requireEmail } from '../utils/validation.js';
 
 const SALT_ROUNDS = 10;
@@ -151,11 +152,18 @@ function getLogout(req, res) {
  * GET /dashboard - the logged-in landing page; requireLogin runs
  * first, so req.session.user is guaranteed to exist here
  * ************************** */
-async function getDashboard(req, res) {
-    res.render('dashboard', {
-        title: 'Dashboard',
-        user: req.session.user
-    });
+async function getDashboard(req, res, next) {
+    try {
+        const volunteeredProjects = await volunteerModel.getVolunteeredProjectsByUserId(req.session.user.id);
+        res.render('dashboard', {
+            title: 'Dashboard',
+            user: req.session.user,
+            volunteeredProjects
+        });
+    } catch (error) {
+        console.error('Controller Error in getDashboard:', error);
+        next(error);
+    }
 }
 
 export default {

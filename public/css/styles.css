@@ -553,3 +553,39 @@ footer {
   background: var(--bg-alt);
   color: var(--text-muted);
 }
+
+/* Volunteer feature (project details + dashboard) */
+.project-volunteer-count {
+  color: var(--text-muted);
+}
+
+.volunteer-panel {
+  margin: 1.5rem 0;
+}
+
+.volunteer-status {
+  display: inline-block;
+  background: #eef9f0;
+  color: #1f7a3f;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.card-actions form {
+  margin: 0;
+}
+
+.no-data-alert .btn {
+  margin-top: 1rem;
+}

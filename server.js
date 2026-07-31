@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Session storage backs both connect-flash and the logged-in user
-// (req.session.user, set by the user controller on login/register). Stored
+// (req.session.user, set by authController on login/register). Stored
 // in Postgres (not the default in-memory store) so sessions survive a
 // server restart/redeploy and don't leak memory over time; the
 // "session" table is created automatically on first run.
